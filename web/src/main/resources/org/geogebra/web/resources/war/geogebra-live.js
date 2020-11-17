@@ -103,7 +103,6 @@
         let updateListener = (function(label) {
             if (this.api.isIndependent(label) && !(this.currentAnimations.includes(label))) {
                 console.log("update event for " + label);
-                this.api.showTooltip(null, label);
                 if (!objectsInWaiting.includes(label)) {
                     objectsInWaiting.push(label);
                     dispatchUpdates();
@@ -251,7 +250,7 @@
         this.showHint = function(event) {
             var user = this.users[event.clientId];
             if (user && event.label) {
-                this.api.showTooltip(user.name, event.label, user.color);
+                this.api.addInteraction(user.name, user.color, event.label);
             }
         }
 
