@@ -101,7 +101,7 @@
 
         // *** UPDATE LISTENERS ***
         let updateListener = (function(label) {
-            if (this.api.isIndependent(label) && !(this.currentAnimations.includes(label))) {
+            if (!(this.currentAnimations.includes(label))) {
                 console.log("update event for " + label);
                 if (!objectsInWaiting.includes(label)) {
                     objectsInWaiting.push(label);

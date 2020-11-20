@@ -1093,8 +1093,7 @@ public class GgbAPIW extends GgbAPI {
 	 * @param color color CSS string
 	 */
 	public void addInteraction(String user, String color, String label) {
-		MultiuserManager.INSTANCE.addInteraction(user, GColor.parseHexColor(color),
-				kernel.lookupLabel(label));
+		MultiuserManager.INSTANCE.addInteraction(app, user, GColor.parseHexColor(color), label);
 	}
 
 	public void asyncEvalCommand(String command, ResolveCallbackFn<String> onSuccess,

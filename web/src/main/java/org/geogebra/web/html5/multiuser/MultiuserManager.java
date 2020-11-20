@@ -7,7 +7,7 @@ import org.geogebra.common.awt.GColor;
 import org.geogebra.common.awt.GGraphics2D;
 import org.geogebra.common.euclidian.EuclidianView;
 import org.geogebra.common.factories.AwtFactory;
-import org.geogebra.common.kernel.geos.GeoElement;
+import org.geogebra.common.main.App;
 
 public class MultiuserManager {
 
@@ -19,15 +19,15 @@ public class MultiuserManager {
 		// singleton class
 	}
 
-	public void addInteraction(String user, GColor color, GeoElement geo) {
+	public void addInteraction(App app, String user, GColor color, String label) {
 		User currentUser = activeInteractions
 				.computeIfAbsent(user, k -> new User(user, color));
 		for (User u : activeInteractions.values()) {
 			if (u != currentUser) {
-				u.removeInteraction(geo);
+				u.removeInteraction(label);
 			}
 		}
-		currentUser.addInteraction(geo);
+		currentUser.addInteraction(app.getActiveEuclidianView(), label);
 	}
 
 	public void paintInteractionBoxes(EuclidianView view, GGraphics2D graphics) {

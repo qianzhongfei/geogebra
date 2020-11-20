@@ -25,7 +25,8 @@ import org.gwtproject.timer.client.Timer;
 class User {
 
 	private final TooltipChip tooltip;
-	private final Map<GeoElement, Timer> interactions;
+	// we are storing the labels since the geo might be recreated
+	private final Map<String, Timer> interactions;
 	private final GColor color;
 
 	User(String user, GColor color) {
@@ -34,16 +35,14 @@ class User {
 		this.color = color;
 	}
 
-	public void addInteraction(GeoElement geo) {
-		AppW app = (AppW) geo.getKernel().getApplication();
-
-		interactions.compute(geo, (k, v) -> {
+	public void addInteraction(EuclidianView view, String label) {
+		interactions.compute(label, (k, v) -> {
 			if (v == null) {
 				v = new Timer() {
 					@Override
 					public void run() {
-						interactions.remove(geo);
-						app.getActiveEuclidianView().repaintView();
+						interactions.remove(label);
+						view.repaintView();
 					}
 				};
 			}
@@ -52,16 +51,17 @@ class User {
 			return v;
 		});
 
-		app.getActiveEuclidianView().repaintView();
+		view.repaintView();
 	}
 
-	public void removeInteraction(GeoElement geo) {
-		interactions.remove(geo);
+	public void removeInteraction(String label) {
+		interactions.remove(label);
 	}
 
 	public void paintInteractionBoxes(EuclidianView view, GGraphics2D graphics) {
 		SelectionManager selection = view.getApplication().getSelectionManager();
 		List<GeoElement> geos = interactions.keySet().stream()
+				.map((label) -> view.getApplication().getKernel().lookupLabel(label))
 				.filter((geo) -> !selection.containsSelectedGeo(geo))
 				.collect(Collectors.toList());
 
