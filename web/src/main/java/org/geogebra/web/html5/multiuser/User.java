@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.geogebra.common.awt.GBasicStroke;
 import org.geogebra.common.awt.GColor;
 import org.geogebra.common.awt.GGraphics2D;
 import org.geogebra.common.awt.GRectangle2D;
@@ -54,6 +55,10 @@ class User {
 		app.getActiveEuclidianView().repaintView();
 	}
 
+	public void removeInteraction(GeoElement geo) {
+		interactions.remove(geo);
+	}
+
 	public void paintInteractionBoxes(EuclidianView view, GGraphics2D graphics) {
 		SelectionManager selection = view.getApplication().getSelectionManager();
 		List<GeoElement> geos = interactions.keySet().stream()
@@ -80,8 +85,13 @@ class User {
 				));
 				graphics.restoreTransform();
 			} else if (d instanceof DrawLocus) {
+				GBasicStroke current = graphics.getStroke();
+				graphics.setStroke(AwtFactory.getPrototype()
+						.newBasicStroke(geo.getLineThickness() + 2, GBasicStroke.CAP_ROUND,
+								GBasicStroke.JOIN_ROUND));
 				GeneralPathClipped gp = ((DrawLocus) d).getPath();
 				graphics.draw(gp);
+				graphics.setStroke(current);
 			} else if (d != null) {
 				graphics.draw(d.getBoundsForStylebarPosition());
 			}
