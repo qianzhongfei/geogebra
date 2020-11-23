@@ -7,6 +7,11 @@ import com.google.gwt.user.client.ui.Label;
 
 public class TooltipChip extends Label {
 
+	/**
+	 * Create a tooltip showing user interaction
+	 * @param user name of the user to be shown
+	 * @param color background color of the tooltip
+	 */
 	public TooltipChip(String user, GColor color) {
 		addStyleName("tooltipChip");
 		setText(user);
@@ -18,6 +23,11 @@ public class TooltipChip extends Label {
 		getElement().addClassName("invisible");
 	}
 
+	/**
+	 * Show the tooltip at the given coordinates
+	 * @param x x pixel coordinate
+	 * @param y y pixel coordinate
+	 */
 	public void show(double x, double y) {
 		getElement().removeClassName("invisible");
 		Style style = getElement().getStyle();

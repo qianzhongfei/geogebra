@@ -9,7 +9,7 @@ import org.geogebra.common.euclidian.EuclidianView;
 import org.geogebra.common.factories.AwtFactory;
 import org.geogebra.common.main.App;
 
-public class MultiuserManager {
+public final class MultiuserManager {
 
 	public static final MultiuserManager INSTANCE = new MultiuserManager();
 
@@ -19,6 +19,13 @@ public class MultiuserManager {
 		// singleton class
 	}
 
+	/**
+	 * Add a multiuser interaction coming from another user
+	 * @param app application
+	 * @param user user that changed this object
+	 * @param color color associated with the user
+	 * @param label label of the changed object
+	 */
 	public void addInteraction(App app, String user, GColor color, String label) {
 		User currentUser = activeInteractions
 				.computeIfAbsent(user, k -> new User(user, color));
@@ -30,6 +37,12 @@ public class MultiuserManager {
 		currentUser.addInteraction(app.getActiveEuclidianView(), label);
 	}
 
+	/**
+	 * Paint the boxes showing which objects were recently changed by
+	 * other users. Also updates the tooltips.
+	 * @param view euclidian view
+	 * @param graphics canvas to paint on
+	 */
 	public void paintInteractionBoxes(EuclidianView view, GGraphics2D graphics) {
 		graphics.setStroke(AwtFactory.getPrototype()
 				.newBasicStroke(5, GBasicStroke.CAP_ROUND, GBasicStroke.JOIN_ROUND));

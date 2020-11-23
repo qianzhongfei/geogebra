@@ -12177,6 +12177,12 @@ public abstract class EuclidianController implements SpecialPointsListener {
 		}
 	}
 
+	/**
+	 * Calculate the smallest rectangle containing the clipped bounds of
+	 * the objects
+	 * @param geos geo elements
+	 * @return bounding rectangle
+	 */
 	public GRectangle calculateBounds(Collection<GeoElement> geos) {
 		// init min/max vars
 		double minX = Double.POSITIVE_INFINITY, minY = Double.POSITIVE_INFINITY,
