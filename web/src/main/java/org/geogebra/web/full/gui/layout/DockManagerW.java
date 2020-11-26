@@ -1746,8 +1746,7 @@ public class DockManagerW extends DockManager {
 
 		double height = app.getAppletFrame().computeHeight();
 		setDividerLocationAbs(split,
-				(int) height - ToolbarPanel.CLOSED_HEIGHT_PORTRAIT
-						- ToolbarPanel.VSHADOW_OFFSET);
+				(int) height - ToolbarPanel.CLOSED_HEIGHT_PORTRAIT);
 	}
 
 	private void calculateKeyboardHeight() {

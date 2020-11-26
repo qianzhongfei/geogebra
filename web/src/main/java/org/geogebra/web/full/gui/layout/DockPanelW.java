@@ -527,6 +527,11 @@ public abstract class DockPanelW extends ResizeComposite
 		public MyDockLayoutPanel() {
 			super(Style.Unit.PX);
 			addStyleName("ggbdockpanelhack");
+			addAttachHandler(evt -> {
+				if (evt.isAttached()) {
+					getElement().getParentElement().addClassName("dockPanelParent");
+				}
+			});
 		}
 
 		@Override

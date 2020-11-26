@@ -141,6 +141,7 @@ public class ZoomSplitLayoutPanel extends DockLayoutPanel {
 			sinkEvents(Event.ONMOUSEDOWN | Event.ONMOUSEUP | Event.ONMOUSEMOVE
 					| Event.ONDBLCLICK | Event.ONTOUCHSTART | Event.ONTOUCHMOVE
 					| Event.ONTOUCHEND);
+			setStyleName("splitPaneDragger");
 		}
 
 		public double getZoom() {
@@ -590,7 +591,8 @@ public class ZoomSplitLayoutPanel extends DockLayoutPanel {
 		LayoutData layoutData = (LayoutData) splitter.getLayoutData();
 		splitter.impl.splitterInsertedIntoLayer(layoutData.layer);
 		Element parentDiv = splitter.getElement().getParentElement();
-		parentDiv.addClassName("draggerParent");
+		parentDiv.setClassName("y".equals(cssdir) ? "draggerParentHorizontal"
+				: "draggerParentVertical");
 		parentDiv.setAttribute("style", parentDiv.getAttribute("style")
 				+ ";overflow-" + cssdir + ":hidden !important");
 	}
