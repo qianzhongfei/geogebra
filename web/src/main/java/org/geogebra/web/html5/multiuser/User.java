@@ -9,11 +9,12 @@ import org.geogebra.common.awt.GBasicStroke;
 import org.geogebra.common.awt.GColor;
 import org.geogebra.common.awt.GGraphics2D;
 import org.geogebra.common.awt.GRectangle2D;
+import org.geogebra.common.awt.GShape;
 import org.geogebra.common.euclidian.Drawable;
 import org.geogebra.common.euclidian.DrawableND;
 import org.geogebra.common.euclidian.EuclidianView;
-import org.geogebra.common.euclidian.GeneralPathClipped;
 import org.geogebra.common.euclidian.draw.DrawLocus;
+import org.geogebra.common.euclidian.draw.DrawSegment;
 import org.geogebra.common.euclidian.draw.HasTransformation;
 import org.geogebra.common.factories.AwtFactory;
 import org.geogebra.common.kernel.geos.GeoElement;
@@ -84,12 +85,14 @@ class User {
 						(int) transformableGeo.getHeight()
 				));
 				graphics.restoreTransform();
-			} else if (d instanceof DrawLocus) {
+			} else if (d instanceof DrawLocus || d instanceof DrawSegment) {
 				GBasicStroke current = graphics.getStroke();
 				graphics.setStroke(AwtFactory.getPrototype()
 						.newBasicStroke(geo.getLineThickness() + 2, GBasicStroke.CAP_ROUND,
 								GBasicStroke.JOIN_ROUND));
-				GeneralPathClipped gp = ((DrawLocus) d).getPath();
+				GShape gp = d instanceof DrawLocus
+						? ((DrawLocus) d).getPath()
+						: ((DrawSegment) d).getLine();
 				graphics.draw(gp);
 				graphics.setStroke(current);
 			} else if (d != null) {
